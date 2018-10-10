@@ -21,7 +21,9 @@ The interesting part about the java consumers is that only one is active at the 
 Digging in the ruby kafka, it seems like the main differences are:
 
 1. No synchronous commit of offsets prior to sending JoinGroupRequest
-2. Java Consumer uses a RangeAssignor while the Ruby Consumer uses a RoundRobinAsignor 
+2. Java Consumer uses a RangeAssignor while the Ruby Consumer uses a RoundRobinAsignor
+3. Everything is done in the main thread. The actual network client calls are run as futures but it's
+synchronized by calling client.poll() which will block for a specified amount of time.
 3. For a single partition, in the Java client, if a new Consumer joins, and it is selected based on the partition assignment, it will start consuming messages from the last committed offset. If new Consumer is not chosen, the existing Consumer will continue from the last committed offset. However, in the ruby client, when a new Consumer joins, both consumers do the work.
 
 ## How to run
