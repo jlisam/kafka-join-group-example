@@ -28,4 +28,4 @@ Digging in the ruby kafka, it seems like the main differences are:
 
 To build: `mvn package`
 
-To run a consumer: `java -jar target/test-1.0-SNAPSHOT-jar-with-dependencies.jar`
+To run a consumer: `java -jar target/*.jar`
